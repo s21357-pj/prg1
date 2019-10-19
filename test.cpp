@@ -2,7 +2,7 @@
 #include <random>
 int main(){
 
-    auto const N = 10;
+    auto const N = 15;
     int an_array[N];
     {
         std::random_device rd;
