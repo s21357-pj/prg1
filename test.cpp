@@ -1,9 +1,9 @@
 #include <iostream>
 #include <random>
-int main(){
+int main(int argc, char* argv[]){
 
-    auto const N = 10;
-    int an_array[N];
+    auto const N = std::stoi(argv[1]);
+    int* an_array = new int[N];
     {
         std::random_device rd;
 	std::uniform_int_distribution<int> generator(0,100);
@@ -12,16 +12,15 @@ int main(){
 	}
     }
     for (auto i = 0; i < N; i++) {
-        auto last = an_array[i];
-        auto index = i;
+        int* last = &an_array[i];     
         for (auto j = i; j < N; j++) {
-	    if (an_array[j] < last) {
-	        last = an_array[j];
-	        index = j;
+	    if (an_array[j] < *last) {
+	        last = &an_array[j];	       
             }
         }
-    an_array[index] = an_array[i];
-    an_array[i] = last;
+    auto tmp = *last;
+    *last = an_array[i];
+    an_array[i] = tmp;
     }	
     std::cout << "sizeof(an_array): "<< sizeof(an_array) <<"\n";
     for (auto i = 0; i < N; i++) {
